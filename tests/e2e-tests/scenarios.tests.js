@@ -1,13 +1,66 @@
-describe('Protractor tests', function() {
-/*
+describe('Todo List Logic', function() {
+
     beforeEach(function() {
-        browser.get('http://158.37.232.251:8100');
+        browser.get('http://158.37.230.166:8100');
     });
-*/
+
 
     it('should have a title', function() {
         expect(browser.getTitle()).toEqual("TodoApp");
     });
+
+
+    it('should contain three elements', function() {
+
+        element.all(by.repeater("task in tasks")).then(function(items) {
+            expect(items.length).toBe(3);
+        });
+    });
+
+
+    it('should toggle completed when task is clicked', function() {
+        // TODO: Implement
+
+
+        element.all(by.repeater("task in tasks")).then(function(items) {
+
+            expect(element(by.repeater("task in tasks").row(1).column("task")).getText()).toEqual("Second");
+
+        });
+
+
+
+
+
+
+    });
+
+
+    it('should add correct task when creating new task', function() {
+        // TODO: Implement
+        //element(by.id('newTaskBtn')).click();
+
+        /*
+        var popup = element(by.title('New Task'));
+
+        popup.input.sendKeys("New Task");
+
+        browser.takeScreenshot().then(function (png) {
+            writeScreenShot(png, 'test1.png');
+        });
+        //popup.confirm();
+
+        //expect()
+        */
+
+    });
+
+    it('should edit correct task when editing a task', function() {
+        // TODO: Implement
+    });
+
+/*
+
 
     describe('List logic', function() {
         it('should toggle completed when clicked', function() {
@@ -51,5 +104,6 @@ describe('Protractor tests', function() {
         });
 
     });
+    */
 
 });
