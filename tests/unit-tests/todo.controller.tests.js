@@ -4,49 +4,69 @@
 
 describe('Todo controller', function () {
 
-    var scope, tasks;
+    var
+      controller,
+      scope,
+      ionicPopupMock,
+      ionicListDelegateMock;
+
+    // Loading module of app
+    beforeEach(module('starter'));
 
 
-    /*beforeEach(function() {
-     module('starter.services');
-     inject(function(_Chats_) {
-     Chats = _Chats_;
-     });
-     });*/
+  // instantiate the controller and mocks for every test
+  beforeEach(inject(function($rootScope, $controller) {
 
-    beforeEach(module('starter.controllers'));
-    beforeEach(function () {
-        chats = [{ name: 'a' }, { name: 'b' }, { name: 'c' }];
-        Chats = {
-            all: function () {
-                return chats;
-            }, remove: function (chat) {
-                chats.splice(chats.indexOf(chat), 1);
-            }
-        };
-        module(function ($provide) {
-            $provide.value('Chats', Chats);
-        });
-    });
+    scope = $rootScope.$new();
+
+    // Adding three tasks.
+    scope.tasks =
+      [
+        {title: "First", completed: true},
+        {title: "Second", completed: false},
+        {title: "Third", completed: false},
+      ];
+
+    // mock $ionicPopup
+    ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['prompt']);
+
+    // mock $ionicListDelegate
+    // TODO: Not sure about second argument of this spy object. Fix.
+    ionicListDelegateMock = jasmine.createSpyObj('$ionicListDelegate spy', ['prompt']);
+
+    // instantiate LoginController with mock data
+    controller = $controller('TodoCtrl', {
+      '$scope': scope,
+      '$ionicPopup': ionicPopupMock,
+      '$ionicListDelegate': ionicListDelegateMock }
+    );
+
+  }));
 
 
-    beforeEach(inject(function ($rootScope, $controller) {
-        scope = $rootScope.$new();
-
-        $controller('ChatsCtrl', { $scope: scope });
-        // window.dump(Chats.all());
-    }));
 
     it('should be defined', function () {
         expect(scope).toBeDefined();
     });
 
     it('should be three entries', function () {
-        expect(scope.chats.length).toBe(3);
+        expect(scope.tasks.length).toBe(3);
+//
     });
 
-    it('should be tow entries after removal', function() {
-        scope.remove({name: 'a'});
-        expect(scope.chats.length).toBe(2);
-    })
+    it('should be two entries after removal', function() {
+        scope.removeTask(0);
+        expect(scope.tasks.length).toBe(2);
+    });
+
+    it('should remove correct task', function(){
+      scope.removeTask(1);
+      expect(scope.tasks[1].title).toBe('Third');
+    });
+
+    it('should not remove if index is >= tasks.length', function() {
+      scope.removeTask(3);
+      expect(scope.tasks.length).toBe(3);
+    });
+
 });

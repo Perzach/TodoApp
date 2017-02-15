@@ -5,8 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic'])
 
+// This is TodoCtrl controller.
 .controller('TodoCtrl', function($scope, $ionicPopup, $ionicListDelegate) {
 
+  // Setting array of tasks in scope.
   $scope.tasks =
       [
         {title: "First", completed: true},
@@ -14,106 +16,57 @@ angular.module('starter', ['ionic'])
         {title: "Third", completed: false},
       ];
 
+
+      // Function for adding a new task by a popup prompt.
       $scope.newTask = function() {
         $ionicPopup.prompt({
         title: "New Task",
         template: "Enter task:",
         inputPlaceholder: "What do you need to do?",
         okText: 'Create task'
-      }).then(function(res) {    // promise
-          if (res) $scope.tasks.push({title: res, completed: false});
+
+        }).then(function(res) {    // promise
+
+          // Add new task if popup returns a result
+          if (res){
+            $scope.tasks.push({title: res, completed: false});
+          }
         })
       };
 
+
+      // Function for editing a task by a popup prompt
       $scope.editTask = function(task) {
         $scope.data = { response: task.title };
         $ionicPopup.prompt({
         title: "Edit Task",
         scope: $scope
-      }).then(function(res) {    // promise
-        if (res !== undefined) task.title = $scope.data.response;
-        $ionicListDelegate.closeOptionButtons();
+
+        }).then(function(res) {    // promise
+
+          if (res !== undefined) {
+            // Edits title to response stored in scope.
+            task.title = $scope.data.response;
+          }
+          // Closes the option button slide.
+          $ionicListDelegate.closeOptionButtons();
       })
     };
-/*
-    $scope.lists =
-        [
-            {title: "List One", tasks: undefined},
-            {title: "List Two", tasks: undefined},
-            {title: "List Three", tasks: undefined},
-        ];
-
-  $scope.newList = function() {
-    $ionicPopup.prompt({
-      title: "New List",
-      template: "Enter list name:",
-      inputPlaceholder: "What is the list name?",
-      okText: 'Create list'
-    }).then(function(res) {    // promise
-      if (res) $scope.lists.push({title: res, tasks: undefined});
-    })
-  };
 
 
-  $scope.loadList = function(list) {
-    $location.path("todo.html");
-  };
+    // Function for removing a specific task.
+    $scope.removeTask = function(index) {
+      if(index < $scope.tasks.length){
+        // Removes tasks from specified index, with delete count: 1
+        $scope.tasks.splice(index, 1)
 
+      } else{
+        // Do nothing
+      }
 
-  $scope.editList = function(list) {
-    $scope.data = { response: list.title };
-    $ionicPopup.prompt({
-      title: "Edit List",
-      scope: $scope
-    }).then(function(res) {    // promise
-      if (res !== undefined) list.title = $scope.data.response;
-      $ionicListDelegate.closeOptionButtons();
-    })
-  };
-*/
-
-})
-
-
-    .controller('ListCtrl', function($scope, $ionicPopup, $ionicListDelegate, $location) {
-
-    $scope.lists =
-        [
-            {title: "List One", tasks: undefined},
-            {title: "List Two", tasks: undefined},
-            {title: "List Three", tasks: undefined},
-        ];
-
-    $scope.newList = function() {
-        $ionicPopup.prompt({
-            title: "New List",
-            template: "Enter list name:",
-            inputPlaceholder: "What is the list name?",
-            okText: 'Create list'
-        }).then(function(res) {    // promise
-            if (res) $scope.lists.push({title: res, tasks: undefined});
-        })
-    };
-
-
-    $scope.loadList = function(list) {
-        $location.path("todo.html");
-    };
-
-
-    $scope.editList = function(list) {
-        $scope.data = { response: list.title };
-        $ionicPopup.prompt({
-            title: "Edit List",
-            scope: $scope
-        }).then(function(res) {    // promise
-            if (res !== undefined) list.title = $scope.data.response;
-            $ionicListDelegate.closeOptionButtons();
-        })
     };
 
 })
-
 
 
 .run(function($ionicPlatform) {

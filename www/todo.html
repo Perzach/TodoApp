@@ -55,7 +55,7 @@
               ng-click="task.completed = !task.completed">
               <i class="icon ion-ios-arrow-left"></i>
               <ion-option-button class="button-assertive"
-                          ng-click="tasks.splice($index, 1)">
+                          ng-click="removeTask($index)">
                   Delete
               </ion-option-button>
               <ion-option-button class="button-energized" ng-click="editTask(task)">
