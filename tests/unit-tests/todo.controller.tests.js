@@ -4,14 +4,14 @@
 
 describe('Todo controller', function () {
 
-    var
-      controller,
-      scope,
-      ionicPopupMock,
-      ionicListDelegateMock;
+  var
+    controller,
+    scope,
+    ionicPopupMock,
+    ionicListDelegateMock;
 
-    // Loading module of app
-    beforeEach(module('starter'));
+  // Loading module of app
+  beforeEach(module('starter'));
 
 
   // instantiate the controller and mocks for every test
@@ -31,7 +31,6 @@ describe('Todo controller', function () {
     ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['prompt']);
 
     // mock $ionicListDelegate
-    // TODO: Not sure about second argument of this spy object. Fix.
     ionicListDelegateMock = jasmine.createSpyObj('$ionicListDelegate spy', ['prompt']);
 
     // instantiate LoginController with mock data

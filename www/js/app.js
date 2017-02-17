@@ -50,7 +50,8 @@ angular.module('starter', ['ionic'])
           }
           // Closes the option button slide.
           $ionicListDelegate.closeOptionButtons();
-      })
+
+        })
     };
 
 
